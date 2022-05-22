@@ -1,15 +1,20 @@
 import { Sequelize } from "sequelize"
+const database :string = process.env.DB_DATABASE || ''
+const user :string = process.env.DB_USERNAME || ''
+const pass :string = process.env.DB_PASSWORD || ''
 
 async function connect() {
         
-     const sequelize = new Sequelize('api_gastos','root','root', {
+     const sequelize: Sequelize = new Sequelize(database,user,pass, {
         host:'localhost',
         dialect: 'mysql'
     })
 
     try {
         await sequelize.authenticate()
-        console.log('Conectado ao Sequelize')
+        .then(() => {
+          console.log('Connection has been established successfully..');
+        })
     } catch (error) {
         console.log('ERROR:', error)
     }
